@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { Provider } from 'react-redux'
+import { createStore ,compose} from 'redux';
+import AuthReducer from './Reducer/AuthReducer';
+const store = compose(
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f
+)(createStore)(AuthReducer);
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

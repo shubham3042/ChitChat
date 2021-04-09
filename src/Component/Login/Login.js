@@ -11,11 +11,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import {authuser} from '../../Action/Action';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="http://material-ui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -47,11 +50,20 @@ function Login(props) {
   const classes = useStyles();
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
-  const [check,setCheck]=useState(false);
   const [redirect,setRedirect]=useState(false);
   const onSubmit=async(e)=>{
     e.preventDefault();
-
+     const ans=await axios.post('http://localhost:3000/users/signIn',{
+       username:email,
+       password:password
+     })
+      if(ans.data.auth===true)
+      {
+        props.authuser(ans.data.user.username);
+        localStorage.setItem('username',ans.data.user.username);
+        setRedirect(true);
+       
+      }
     }
   return (
     <Container component="main" maxWidth="xs">
@@ -63,15 +75,16 @@ function Login(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+     
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
+            id="username"
+            label="Username"
+            name="Username"
             autoComplete="email"
             autoFocus
             onChange={(e)=>setEmail(e.target.value)}
@@ -102,20 +115,31 @@ function Login(props) {
           <Grid container>
             <Grid item xs>
               <p variant="body2">
-                Forgot password?
+                 Forgot password?
               </p>
             </Grid>
           </Grid>
-          <p style={{marginTop:0}}>Don't have account?Sign up</p> 
+          <p style={{marginTop:0}}>Don't have account? <Link to="/signup">Sign up</Link></p> 
         </form>
       </div>
       
       {
         redirect===true?
-        <Redirect to="/feed" />
+        <Redirect to="/" />
         :null
       }
     </Container>
   );
 }
-export default Login;
+const mapStateToProps = state => {
+	return {
+	   auth: state,
+	//   cartUpdated: () => { return true }
+	 };
+   };
+ const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+	authuser	
+}, dispatch)
+ }
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

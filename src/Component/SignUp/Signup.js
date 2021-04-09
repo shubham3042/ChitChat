@@ -39,15 +39,36 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const classes = useStyles();
   const [firstname,setFirstname]=useState('');
-  const [lastname,setLastname]=useState('');
+  
   const [mobilenum,setMobilenum]=useState('');
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
   const [redirect,setRedirect]=useState(false);
-  const [checkUsername,setCheckUsername]=useState(true);
+  const [checkUsername,setCheckUsername]=useState(false);
+  const [username,setUsername]=useState('');
+  const [valid,setValid]=useState(false);
   const onsubmit=async(e)=>{
     e.preventDefault();
+    console.log({username:username, 
+      password:password,
+      name:firstname,
+      email:email})
+    axios.post('http://localhost:3000/users/register',{
+       username:username, 
+      password:password,
+      name:firstname,
+      email:email
+    }).then(data=>setValid(true))
+    .catch(err =>setCheckUsername(!err.response.data.auth))
+    //  console.log(ans.data);
+    //  if(ans.data.auth===false)
+    //  {
+    //    setCheckUsername(true);s
+    //  }s
+    //  else
+    //  {
 
+    //  }
   }
   const onCancel=()=>{
     console.log("hello");
@@ -65,31 +86,21 @@ export default function Register() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="na,e"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
                 onChange={(e)=>setFirstname(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={(e)=>setLastname(e.target.value)}
-              />
-            </Grid>
+            
+         
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -115,23 +126,7 @@ export default function Register() {
                 onChange={(e)=>setPassword(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-            <TextField
-                autoComplete="num"
-                name="MobileNum"
-                variant="outlined"
-                required
-                fullWidth
-                id="Mobile Num"
-                label="Mobile Num"
-                autoFocus
-                onChange={(e)=>setMobilenum(e.target.value)}
-/>
-              {/*<FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />*/}
-            </Grid>
+          
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -142,24 +137,12 @@ export default function Register() {
                 type="text"
                 id="username"
                 autoComplete="username"
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e)=>setUsername(e.target.value)}
               />
             </Grid>
           </Grid>
-          {
-              checkUsername===false ?
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={onsubmit}
-             
-            >
-            Check Username
-            </Button>
-            :
+      
+        
             <Button
             type="submit"
             fullWidth
@@ -168,9 +151,9 @@ export default function Register() {
             className={classes.submit}
             onClick={onsubmit}
           >
-          Add
+          Sign up
           </Button>
-          }
+      
           
           <Grid container justify="flex-end">
             <Grid item>
@@ -192,10 +175,10 @@ export default function Register() {
     </SweetAlert>
 :null
   }
-      {/*redirect===true?
-      <Redirect to="/admin/table" />
+      {valid===true?
+      <Redirect to="/login" />
       :null
-      */}
+      }
     </Container>
   );
 }

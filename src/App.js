@@ -5,6 +5,7 @@ import Header from './Component/Header/Header';
 import Feed from './Component/Feed/Feed';
 import Profile from './Component/Profile/Profile';
 import Signup from './Component/SignUp/Signup';
+
 function App() {
   return (
     <div className="App">  
@@ -13,7 +14,7 @@ function App() {
          <Signup />
        </Route>
        <Route path="/login" exact>
-         <Signup />
+         <Login />
        </Route>
        <Route path="/" exact>
          <Feed />
