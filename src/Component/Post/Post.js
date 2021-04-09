@@ -21,7 +21,7 @@ import { setRef } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 300,
+    minWidth: 500,
   },
   media: {
     height: 0,
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+
+export default function RecipeReviewCard({username, tweet_text, likes, comments, created_at}) {
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 const [comment,setComment]=React.useState('');
@@ -56,12 +58,16 @@ const [comment,setComment]=React.useState('');
         
     }
   }
+  const like = () =>{
+    
+  }
+  const date = new Date(created_at);
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{marginTop:'10px'}}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {username.charAt(0).toUpperCase() }
           </Avatar>
         }
 
@@ -70,32 +76,25 @@ const [comment,setComment]=React.useState('');
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title= {username}
+        subheader= {date.getDate() + "-" + (date.getMonth()+1) + "-"+ date.getFullYear()}
       />
-      { 
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      />
-     
-      }
+
     <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-           This impressive paella is a perfect party dish and a fun meal to cook together with your guests.
+         {tweet_text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites"> {likes}
+          <FavoriteIcon onClick = {like}/>
         </IconButton>
         <IconButton
         
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
-        >
+        >{comments}
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
