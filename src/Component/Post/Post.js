@@ -43,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function RecipeReviewCard({username, tweet_text, likes, comments, created_at}) {
+export default function RecipeReviewCard({id, username, tweet_text, likes, comments, created_at}) {
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-const [comment,setComment]=React.useState('');
+  const [comment,setComment]=React.useState('');
+  const[like, setLike] = React.useState(likes);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -58,7 +59,7 @@ const [comment,setComment]=React.useState('');
         
     }
   }
-  const like = () =>{
+  const onLike = () =>{
     
   }
   const date = new Date(created_at);
@@ -87,7 +88,7 @@ const [comment,setComment]=React.useState('');
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites"> {likes}
-          <FavoriteIcon onClick = {like}/>
+          <FavoriteIcon onClick = {onLike} />
         </IconButton>
         <IconButton
         
@@ -96,7 +97,7 @@ const [comment,setComment]=React.useState('');
           aria-label="show more"
         >{comments}
           <ExpandMoreIcon />
-        </IconButton>
+        </IconButton >
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

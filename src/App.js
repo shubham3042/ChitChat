@@ -6,6 +6,7 @@ import Feed from './Component/Feed/Feed';
 import Profile from './Component/Profile/Profile';
 import Signup from './Component/SignUp/Signup';
 
+import 'tachyons';
 function App() {
   return (
     <div className="App">  
