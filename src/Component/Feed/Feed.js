@@ -6,25 +6,40 @@ import axios from 'axios';
 const Feed=()=>{
     const[state,setState]=useState({
         redirect : false,
-        loading: true,
-        tweets : [],
+        loading: false,
+        tweets : [{
+            username:'shlok',
+            id:1,
+            tweet_text:'hello',
+            likes:5, 
+            comments:'',
+           created_at:new Date().toISOString
+        },
+        {
+            username:'shubham',
+            id:1,
+            tweet_text:'hey babydoll',
+            likes:5, 
+            comments:'',
+           created_at:new Date().toISOString
+        }],
         tweet_text :""
     });
  
     useEffect(()=>{
         if(localStorage.getItem('username')===null)
-        {
-            
+        {     
             setState({redirect: true});
         }
         else{
-            axios.get('/feed')
-            .then(data =>{
-                setState({
-                    loading: false,
-                    tweets : data.data
-                })
-            })
+            // axios.get('http://localhost:3003/feed')
+            //    .then(data =>{
+            //     console.log("heelo",data)
+            //     setState({
+            //         loading: false,
+            //         tweets : data.data
+            //     })
+            // })
         }
     
     },[])
@@ -40,7 +55,7 @@ const Feed=()=>{
     
     const postTweet =(e) =>{
         e.preventDefault();
-        axios.post('/tweets/postTweet',{
+        axios.post('http://localhost:3003/tweets/postTweet',{
             text : state.tweet_text
         })
         .then(data =>{

@@ -20,7 +20,7 @@ function App() {
        <Route path="/" exact>
          <Feed />
        </Route>
-       <Route path="/Profile" exact>
+        <Route path="/Profile/:username" exact>
          <Profile />
        </Route>
       </Router>

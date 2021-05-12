@@ -18,7 +18,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 //import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom/cjs/react-dom.development';
 import TextField from '@material-ui/core/TextField';
 import { setRef } from '@material-ui/core';
-
+import {Redirect,Link} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 500,
@@ -67,17 +67,16 @@ export default function RecipeReviewCard({id, username, tweet_text, likes, comme
     <Card className={classes.root} style={{marginTop:'10px'}}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="recipe" className={classes.avatar}>   
             {username.charAt(0).toUpperCase() }
           </Avatar>
         }
-
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title= {username}
+        title= {<Link to={`/profile/${username}`}>{username}</Link>}
         subheader= {date.getDate() + "-" + (date.getMonth()+1) + "-"+ date.getFullYear()}
       />
 
@@ -91,7 +90,7 @@ export default function RecipeReviewCard({id, username, tweet_text, likes, comme
           <FavoriteIcon onClick = {onLike} />
         </IconButton>
         <IconButton
-        
+
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
@@ -101,12 +100,7 @@ export default function RecipeReviewCard({id, username, tweet_text, likes, comme
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                minutes.
-          </Typography>
-          <TextField id="" label="Enter Comment" style={{maxWidth:280}} onKeyPress={Comment} />
-          
+          <TextField id="" label="Enter Comment" style={{maxWidth:280}} onKeyPress={Comment} />     
         </CardContent>
       </Collapse>
     </Card>

@@ -53,10 +53,10 @@ function Login(props) {
   const [redirect,setRedirect]=useState(false);
   const onSubmit=async(e)=>{
     e.preventDefault();
-     const ans=await axios.post('/users/signIn',{
+     const ans=await axios.post('http://localhost:3003/users/signIn',{
        username:email,
        password:password
-     })
+     },)
       if(ans.data.auth===true)
       {
         props.authuser(ans.data.user.username);

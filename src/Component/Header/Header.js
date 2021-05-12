@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -87,7 +87,7 @@ export default function Header() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+const [redirect,setRedirect]=useState(false);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -116,8 +116,10 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><Link to="/profile">Profile</Link></MenuItem>
-   
+      <MenuItem onClick={handleMenuClose}><Link to={`/profile/${localStorage.getItem('username')}`}>Profile</Link></MenuItem>
+      <MenuItem onClick={()=>{
+        localStorage.removeItem('username');
+      }} >Logout</MenuItem>
     </Menu>
   );
 
@@ -177,7 +179,7 @@ export default function Header() {
           <Typography className={classes.title} variant="h6" noWrap>
            Chit-Chat App
           </Typography>
-          <HomeIcon style={{marginLeft:'15px',marginRight:'15px',cursor:'pointer'}} />
+         <Link to="/" > <HomeIcon style={{marginLeft:'15px',marginRight:'15px',cursor:'pointer',color:'white',marginTop:'4px'}} /></Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

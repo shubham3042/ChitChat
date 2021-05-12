@@ -53,12 +53,12 @@ export default function Register() {
       password:password,
       name:firstname,
       email:email})
-    axios.post('http://localhost:3000/users/register',{
+    axios.post('http://localhost:3003/users/register',{
        username:username, 
       password:password,
       name:firstname,
       email:email
-    }).then(data=>setValid(true))
+    }).then((data)=>setValid(true))
     .catch(err =>setCheckUsername(!err.response.data.auth))
     //  console.log(ans.data);
     //  if(ans.data.auth===false)
